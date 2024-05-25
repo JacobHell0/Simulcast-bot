@@ -31,7 +31,8 @@ wordsToRemove = ["park", "downs", "racetrack", "(quarter horse)",  # must be
                  "(harness) hd", "(harness)", "jack", "race course", "racino",  # lowercase
                  "mohegan sun", "thordoughbred club", "race track",
                  "the", "- charlottetown driving", "raceway",
-                 "and casino hd", 'races', 'fields', 'racing, gaming & hotel']
+                 "and casino hd", 'races', 'fields', 'racing, gaming & hotel',
+                 "(quarter horse )"]
 
 excluded = ["ellis park", "tioga downs", "georgian downs", "arapahoe park",
             "ocean downs", "ajax downs", 'australian racing',
@@ -44,7 +45,7 @@ bannedTrack = ["event name", "greyhound", "africa", "pmu", "mardi gras", "americ
                "wheeling", "skowhegan", 'timonium fair', 'carf - ferndale',
                'illinois fair racing', 'bangor raceway', 'hong kong jockey club', 'arapahoe park', 'at albuquerque',
                'keeneland horse', 'magic city jai alai', 'shenandoah', 'farmington fair', 'fanduel racing tv', 'carf',
-               'columbus', 'gran premio']  # has to be lowercase
+               'columbus', 'gran premio', 'energy']  # has to be lowercase
 
 # if a track has a word that must be removed but you also want to keep one of
 # the banned words, put it in here, i.e Delta downs

@@ -1,5 +1,5 @@
 # from threading import Thread
-from apscheduler.triggers.cron import CronTrigger
+# from apscheduler.triggers.cron import CronTrigger
 from flask import Flask, render_template
 from flask_apscheduler import APScheduler
 from flask import send_file
@@ -14,7 +14,7 @@ sched = APScheduler()
 
 def send_tracks():
     print("sending")
-    # mainProccess('s_address')
+    mainProccess('s_address')
     mainProccess('j_address')
     print("sent")
 
