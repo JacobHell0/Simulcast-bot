@@ -1,3 +1,13 @@
+ZipFiles
+.idea
+Testing
+build
+dist
+*.pdf
+*.spec
+.env
+error-log.txt
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
