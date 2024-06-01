@@ -162,7 +162,7 @@ def convertToPdf(lowest_post):
 
 
 	# airtime, duration, track, roberts, recon(space)
-	lowest_post.insert(0, ["On airtime", "Duration", "Track Name",
+	lowest_post.insert(0, ["Post Time", "Duration", "Track Name",
 						   "Roberts", "Recon", " ® "])
 	# temporary date, replace with actual title not in table
 	dt = datetime.now(timezone('EST'))
