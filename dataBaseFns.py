@@ -65,6 +65,7 @@ woodbine_to_RTN = {'Belmont At Aqueduct': 'Belmont @ The Big A',
                    'Gulfstream': 'Gulfstream',
                    'Woodbine': 'Woodbine Thbd',
                    "Harrah's Philadelphia": "Harrah's Philly",
+                   "Saratoga": "Saratoga Race Course"
 				   }
 
 
