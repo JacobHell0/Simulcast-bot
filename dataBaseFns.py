@@ -75,7 +75,8 @@ woodbine_to_RTN = {'Belmont At Aqueduct': 'Belmont @ The Big A',
                    'Woodbine': 'Woodbine Thbd',
                    "Harrah's Philadelphia": "Harrah's Philly",
                    "Century Downs": "Century Downs Stb",
-                   "Century Mile": "Century Mile Thb"
+                   "Century Mile": "Century Mile Thb",
+                   "Saratoga": "Saratoga Race Course"
 				   }
 
 
