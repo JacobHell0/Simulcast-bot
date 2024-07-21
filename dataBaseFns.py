@@ -24,29 +24,7 @@ thor = ['Arapahoe', 'Assiniboia', 'Australian Racing', 'Belterra',
         'Kentucky Downs', 'Ajax Downs', 'Churchill', 'Will Rogers Downs', 'Belmont', 'Fairmount',
         'Santa Anita']  # check if there is a harness version of century mile
 
-# restricted words and ignored database. Any word in wordsToRemove will
-# be removed from the track name. Any words in exlcuded will be ignored
-# from the wordsToRemove list
-wordsToRemove = ["park", "downs", "racetrack", "(quarter horse)",  # must be
-                 "(harness) hd", "(harness)", "jack", "race course", "racino",  # lowercase
-                 "mohegan sun", "thordoughbred club", "race track",
-                 "the", "- charlottetown driving", "raceway",
-                 "and casino hd", 'races', 'fields', 'racing, gaming & hotel',
-                 "(quarter horse )"]
-
-excluded = ["ellis park", "tioga downs", "georgian downs", "arapahoe park",
-            "ocean downs", "ajax downs", 'australian racing',
-            'sis australian racing', 'the meadows', 'vernon downs',
-            'delta downs', 'remington park', 'kentucky downs', 'century downs']
-
-# banned tracks databse, any word in here will bar any track contining this
-# word from the final list
-bannedTrack = ["event name", "greyhound", "africa", "pmu", "mardi gras", "american racing", "cumberland", "sonoma",
-               "wheeling", "skowhegan", 'timonium fair', 'carf - ferndale',
-               'illinois fair racing', 'bangor raceway', 'hong kong jockey club', 'arapahoe park', 'at albuquerque',
-               'keeneland horse', 'magic city jai alai', 'shenandoah', 'farmington fair', 'fanduel racing tv', 'carf',
-               'columbus', 'gran premio', 'energy']  # has to be lowercase
-
+# customTrackName happens 1st
 # if a track has a word that must be removed but you also want to keep one of
 # the banned words, put it in here, i.e Delta downs
 customTrackName = {'The Meadows Racetrack': 'The Meadows',
@@ -56,7 +34,38 @@ customTrackName = {'The Meadows Racetrack': 'The Meadows',
                    'Will Rogers Hd': 'Will Rogers Downs',
                    # 'FanDuel Racing TV' : 'Fanduel - Fairmount',
                    'Fanduel Sportsbook and Horse Racing': 'Fairmount',
+                   'Century Downs Racetrack (Harness) HD': 'Century Downs',
+                   'Century Mile Racetrack and Casino HD': 'Century Mile'
                    }
+
+
+
+
+# restricted words and ignored database. Any word in wordsToRemove will
+# be removed from the track name. Any words in exlcuded will be ignored
+# from the wordsToRemove list
+wordsToRemove = ["park", "downs", "racetrack", "(quarter horse)",  # must be
+                 "(harness) hd", "(harness)", "jack", "race course", "racino",  # lowercase
+                 "mohegan sun", "thordoughbred club", "race track",
+                 "the", "- charlottetown driving", "raceway",
+                 "and casino hd", 'races', 'fields', 'racing, gaming & hotel',
+                 "(quarter horse )", "first track"]
+
+excluded = ["ellis park", "tioga downs", "georgian downs", "arapahoe park",
+            "ocean downs", "ajax downs", 'australian racing',
+            'sis australian racing', 'the meadows', 'vernon downs',
+            'delta downs', 'remington park', 'kentucky downs', 'century downs',
+            'century', 'colonial downs']
+
+# banned tracks databse, any word in here will bar any track contining this
+# word from the final list
+bannedTrack = ["event name", "greyhound", "africa", "pmu", "mardi gras", "american racing", "sonoma",
+               "wheeling", "skowhegan", 'timonium fair', 'carf - ferndale',
+               'illinois fair racing', 'hong kong jockey club', 'arapahoe park', 'at albuquerque',
+               'keeneland horse', 'magic city jai alai', 'shenandoah', 'farmington fair', 'fanduel racing tv', 'carf',
+               'columbus', 'gran premio', 'energy', 'fair meadows at tulsa']  # has to be lowercase
+
+
 
 # wordlist for woodbine tracks being converted to RTN tracks
 # to use, simply put RTN Track : Corresponding WDBN Track
@@ -65,6 +74,8 @@ woodbine_to_RTN = {'Belmont At Aqueduct': 'Belmont @ The Big A',
                    'Gulfstream': 'Gulfstream',
                    'Woodbine': 'Woodbine Thbd',
                    "Harrah's Philadelphia": "Harrah's Philly",
+                   "Century Downs": "Century Downs Stb",
+                   "Century Mile": "Century Mile Thb"
 				   }
 
 
@@ -81,7 +92,7 @@ def harnOrThor(track):
         return 'TB'
     return ''
 
-
+# This function is run first
 def removeTracks(tabledict):
     """takes in a dictionary and removes any item containing a word
 	 from the list bannedTrack"""
@@ -91,14 +102,16 @@ def removeTracks(tabledict):
             # print(key)
             del tabledict[key]
 
-
+# Then removeKeyWords happens
 def removeKeyWords(tabledict):
     """takes in a dictionary and removes specific keywords from them
 	unless the track is in the excluded list returns nothing"""
     # go through and check if any keys exactly match the dict customTrackName
     for key in list(tabledict.keys()):
+        # print("key in remove: " + key)
         if key in customTrackName:
             tabledict[customTrackName[key]] = tabledict.pop(key)
+            # print("changed " + customTrackName[key])
     # iterate through dict.keys()
     for key in list(tabledict.keys()):
         if key.lower() in excluded:

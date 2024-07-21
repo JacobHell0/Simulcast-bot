@@ -33,7 +33,7 @@ def sortKey(list_object):  # contains by what value lowest_post is sorted
 def sortKeyWoodbine(list_object):  # contains by what value lowest_post is sorted
 	# if (list_object[0][5:9] == 'a.m.')):
 	# 	list_object[0] = '0' + list_object[0][:]
-	print(f"trying to convert: {list_object}")
+	# print(f"trying to convert: {list_object}")
 	return timeToDecMixed(list_object[0])
 
 
@@ -198,6 +198,7 @@ def mainProccess(email):
 	table = getRTN()  # make request to rtn.tv and parse it with bs4
 	if table == -1:
 		return
+
 	tabledict = generateDict(table)  # convert into dict
 	removeTracks(tabledict)  # remove unwanted tracks
 	removeKeyWords(tabledict)  # removes instances of words like racing and park
