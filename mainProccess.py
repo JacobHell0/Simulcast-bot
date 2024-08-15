@@ -15,7 +15,7 @@ from grabPost import grabPost
 import os
 from dotenv import load_dotenv
 
-TRACKS_ON_PAGE = 23
+TRACKS_ON_PAGE = 30
 
 load_dotenv()
 
@@ -235,7 +235,7 @@ def addPage(table_data, date, pdf):
 				if ("Ajax Downs" in datum) or ("Woodbine" in datum):
 					pdf.set_font(style="B")
 
-				row.cell(datum, padding=-1.5)
+				row.cell(datum, padding=-2.4)
 				pdf.set_font(style="")
 
 def convertToPdfTracksheet(lowest_post):
