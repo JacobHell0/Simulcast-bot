@@ -49,6 +49,14 @@ def return_files_tut():
         return str(e)
 
 
+@app.route('/Track_Sheet.pdf')
+def return_files_tut():
+    try:
+        return send_file('RTN_Tracks.pdf', download_name='RTN_Tracks.pdf')
+    except Exception as e:
+        return str(e)
+
+
 sched.add_job(id='job1', func=send_tracks, trigger='cron', day_of_week='mon-sun', hour=9, minute=0)
 sched.add_job(id='job2', func=uptime_ping, trigger='cron', minute='*')
 
