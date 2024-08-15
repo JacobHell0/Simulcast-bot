@@ -1,7 +1,7 @@
 from SharedTools import getRTN, generateDict
 from dataBaseFns import removeTracks, removeKeyWords, harnOrThor, inWoodbineTrackDatabase, setWoodbineTrack
 from SendEmail import sendEmail
-from fpdf import FPDF
+from fpdf import FPDF, FontFace
 from datetime import datetime
 from pytz import timezone
 from iteration_utilities import unique_everseen, duplicates
@@ -192,6 +192,51 @@ def convertToPdf(lowest_post):
 
 	pdf.output('RTN_Tracks.pdf')
 
+def convertToPdfTracksheet(lowest_post):
+	pdf = FPDF()
+	pdf.add_page()
+	pdf.table()
+
+	# set margins
+	pdf.set_margins(2.5, 15, 2.5)
+
+	date = lowest_post[0][2]
+
+	pdf.image("logo.png", x=20, y=60)
+	pdf.image("Watermark.png", x=20, y=60)
+
+	pdf.set_font('Arial', 'B', 30)
+	pdf.cell(w=0, h=10, text=date, border='', ln=2, align='C', fill=False)
+	pdf.cell(w=0, h=10, text=" ", ln=2)
+
+	# Keep cells [0] and [2] (post time and track name)
+	# post_times = [["", date]]
+	post_times = []
+	for item in lowest_post:
+		# post_times.append(["• " + item[0] + " " + item[2]])
+		post_times.append(["* " + item[0] + " " + item[2]])
+
+	print(f"popped: {post_times.pop(0)}")
+	print(f"popped: {post_times.pop(0)}")
+	print(f"popped: {post_times.pop(0)}")
+
+	# post_times.insert(0, date)
+
+	# with pdf.table(width=190, col_widths=12, text_align="CENTER") as table:
+	pdf.set_font(family='Times', size=12, style="")
+	override_style = FontFace(emphasis="")
+	with pdf.table(text_align="LEFT", headings_style=override_style, borders_layout="NONE") as table:
+		for data_row in post_times:
+			row = table.row()
+			for datum in data_row:
+				if ("Ajax Downs" in datum) or ("Woodbine" in datum):
+					pdf.set_font(style="B")
+
+				row.cell(datum)
+				pdf.set_font(style="")
+
+	pdf.output('Track_sheet.pdf')
+	# print("LOWEST POST: \n", lowest_post)
 
 def mainProccess(email):
 	# -------------------------------
@@ -206,6 +251,8 @@ def mainProccess(email):
 	lowest_post = makeLowestPostWoodbine(tabledict)
 
 	convertToPdf(lowest_post)
+	convertToPdfTracksheet(lowest_post)
 	# ---------------------------------
 
 	sendEmail(os.environ[email])
+
