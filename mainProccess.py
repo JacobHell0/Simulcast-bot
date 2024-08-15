@@ -15,6 +15,8 @@ from grabPost import grabPost
 import os
 from dotenv import load_dotenv
 
+TRACKS_ON_PAGE = 23
+
 load_dotenv()
 
 
@@ -183,6 +185,10 @@ def convertToPdf(lowest_post):
 		for data_row in lowest_post:
 			row = table.row()
 			for datum in data_row:
+				if " a.m. " in datum:
+					datum = datum.replace(" a.m. ", " AM ")
+				if " p.m. " in datum:
+					datum = datum.replace(" p.m. ", " PM ")
 				if ("Ajax Downs" in datum) or ("Woodbine" in datum):
 					pdf.set_font(style="B")
 				# check if item is in db and weather to assign it TB or H
@@ -192,51 +198,70 @@ def convertToPdf(lowest_post):
 
 	pdf.output('RTN_Tracks.pdf')
 
-def convertToPdfTracksheet(lowest_post):
-	pdf = FPDF()
+
+def addPage(table_data, date, pdf):
+	"""helper function to add a page with a table filled with table_data to the document, returns nothing"""
 	pdf.add_page()
-	pdf.table()
 
 	# set margins
-	pdf.set_margins(2.5, 15, 2.5)
+	pdf.set_margins(7.5, 15, 7.5)
 
-	date = lowest_post[0][2]
+	pdf.image("resources/logo.png", x=10, y=8.5, w=20, h=33)  # aspect ratio is 20:33
+	pdf.image("resources/Watermark.png", x=9, y=6, w=739 * 0.262, h=986 * 0.262)  # aspect ratio is 739:986
 
-	pdf.image("logo.png", x=20, y=60)
-	pdf.image("Watermark.png", x=20, y=60)
+	# draw border
+	# pdf.rect(x=4, y=4, w=200, h=250)
+	pdf.rect(x=5, y=4, w=199.6, h=288)
+	pdf.rect(x=6, y=5, w=197.6, h=286)
+	# pdf.rect(x=4, y=4, w=200, h=300)
 
-	pdf.set_font('Arial', 'B', 30)
-	pdf.cell(w=0, h=10, text=date, border='', ln=2, align='C', fill=False)
+	pdf.set_font('Arial', 'BU', 32)
+	pdf.cell(w=0, h=10, text=date, ln=2, align='C', fill=False)
+	pdf.set_font('Arial', 'B', 32)  # have to turn underline off, so it doesn't underline the space
 	pdf.cell(w=0, h=10, text=" ", ln=2)
 
-	# Keep cells [0] and [2] (post time and track name)
-	# post_times = [["", date]]
-	post_times = []
-	for item in lowest_post:
-		# post_times.append(["• " + item[0] + " " + item[2]])
-		post_times.append(["* " + item[0] + " " + item[2]])
+	pdf.set_font(family='Roman', size=18, style="")
 
-	print(f"popped: {post_times.pop(0)}")
-	print(f"popped: {post_times.pop(0)}")
-	print(f"popped: {post_times.pop(0)}")
+	pdf.set_xy(x=45, y=35)
+	with pdf.table(text_align="LEFT", first_row_as_headings=False, borders_layout="NONE", align="LEFT") as table:
 
-	# post_times.insert(0, date)
-
-	# with pdf.table(width=190, col_widths=12, text_align="CENTER") as table:
-	pdf.set_font(family='Times', size=12, style="")
-	override_style = FontFace(emphasis="")
-	with pdf.table(text_align="LEFT", headings_style=override_style, borders_layout="NONE") as table:
-		for data_row in post_times:
+		for data_row in table_data:
 			row = table.row()
 			for datum in data_row:
+				if " a.m. " in datum:
+					datum = datum.replace(" a.m. ", " AM ")
+				if " p.m. " in datum:
+					datum = datum.replace(" p.m. ", " PM ")
 				if ("Ajax Downs" in datum) or ("Woodbine" in datum):
 					pdf.set_font(style="B")
 
-				row.cell(datum)
+				row.cell(datum, padding=-1.5)
 				pdf.set_font(style="")
 
-	pdf.output('Track_sheet.pdf')
-	# print("LOWEST POST: \n", lowest_post)
+def convertToPdfTracksheet(lowest_post):
+	pdf = FPDF()
+	date = lowest_post[0][2]
+
+	# Keep cells [0] and [2] (post time and track name)
+	# post_times = [["", date]]
+
+	pdf.add_font("Roman", fname="resources/times.ttf")
+	pdf.add_font("Roman", style="B", fname="resources/timesbd.ttf")
+
+	post_times = []
+	for item in lowest_post:
+		post_times.append(["• " + item[0] + " " + item[2]])
+
+	post_times.pop(0)  # remove top 3 cells they are useless, includes date, and 2 headings
+	post_times.pop(0)
+	post_times.pop(0)
+
+	while post_times:
+		limited_post_times = post_times[0:TRACKS_ON_PAGE]
+		post_times = post_times[TRACKS_ON_PAGE:]
+		addPage(limited_post_times, date, pdf)
+
+	pdf.output('Track_Sheet.pdf')
 
 def mainProccess(email):
 	# -------------------------------

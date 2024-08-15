@@ -6,6 +6,22 @@ from email import encoders
 import os
 
 
+def attachPayload(pdfname, message):
+
+    # open the file in binary
+    binary_pdf = open(pdfname, 'rb')
+
+    payload = MIMEBase('application', 'octate-stream', Name=pdfname)
+    # payload = MIMEBase('application', 'pdf', Name=pdfname)
+    payload.set_payload(binary_pdf.read())
+
+    # encoding the binary into base64
+    encoders.encode_base64(payload)
+
+    # add header with pdf name
+    payload.add_header('Content-Decomposition', 'attachment', filename=pdfname)
+    message.attach(payload)
+
 def sendEmail(address):  # takes an email address as a string and sends an email to it
 
     body = '''Attached is a pdf of the RTN schedule. If you find any errors or have suggestions, feel free to reply to this email
@@ -28,21 +44,8 @@ def sendEmail(address):  # takes an email address as a string and sends an email
 
     message.attach(MIMEText(body, 'plain'))
 
-    pdfname = 'RTN_Tracks.pdf'
-
-    # open the file in bynary
-    binary_pdf = open(pdfname, 'rb')
-
-    payload = MIMEBase('application', 'octate-stream', Name=pdfname)
-    # payload = MIMEBase('application', 'pdf', Name=pdfname)
-    payload.set_payload(binary_pdf.read())
-
-    # encoding the binary into base64
-    encoders.encode_base64(payload)
-
-    # add header with pdf name
-    payload.add_header('Content-Decomposition', 'attachment', filename=pdfname)
-    message.attach(payload)
+    attachPayload("RTN_Tracks.pdf", message)
+    attachPayload("Track_Sheet.pdf", message)
 
     # use gmail with port
     session = smtplib.SMTP('smtp.gmail.com', 587)
