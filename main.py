@@ -15,7 +15,7 @@ sched = APScheduler()
 def send_tracks():
     print("sending")
     mainProccess('s_address')
-    mainProccess('j_address')
+    # mainProccess('j_address')
     print("sent")
 
 def uptime_ping():
@@ -42,7 +42,7 @@ def manual_send_s():
 
 
 @app.route('/RTN_Tracks.pdf')
-def return_files_tut():
+def return_files_RTN_Tracks():
     try:
         return send_file('RTN_Tracks.pdf', download_name='RTN_Tracks.pdf')
     except Exception as e:
@@ -50,9 +50,9 @@ def return_files_tut():
 
 
 @app.route('/Track_Sheet.pdf')
-def return_files_tut():
+def return_files_Track_Sheet():
     try:
-        return send_file('RTN_Tracks.pdf', download_name='RTN_Tracks.pdf')
+        return send_file('Track_sheet.pdf', download_name='Track_sheet.pdf')
     except Exception as e:
         return str(e)
 
