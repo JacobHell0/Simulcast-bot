@@ -199,8 +199,20 @@ def convertToPdf(lowest_post):
 	pdf.output('RTN_Tracks.pdf')
 
 
-def addPage(table_data, date, pdf):
-	"""helper function to add a page with a table filled with table_data to the document, returns nothing"""
+def addPage(table_data, date, pdf, layout):
+	"""helper function to add a page with a table filled with table_data to the document, returns nothing.
+	Keyword arguments:
+		table_data -- a list of lists containing the data for the track sheet
+		date -- the date in a string format
+		pdf -- the pdf from FPDF2
+		layout -- the amount of tracks on the page, can be as follows
+			30: font 18
+			40: font 15
+	"""
+	layout_lookup = {30: 17.5, 40: 15}
+
+	font = layout_lookup[layout]
+
 	pdf.add_page()
 
 	# set margins
@@ -217,14 +229,13 @@ def addPage(table_data, date, pdf):
 
 	pdf.set_font('Arial', 'BU', 32)
 	pdf.cell(w=0, h=10, text=date, ln=2, align='C', fill=False)
-	pdf.set_font('Arial', 'B', 32)  # have to turn underline off, so it doesn't underline the space
-	pdf.cell(w=0, h=10, text=" ", ln=2)
+	# pdf.set_font('Arial', 'B', 32)  # have to turn underline off, so it doesn't underline the space
+	# pdf.cell(w=0, h=2, text=" ", ln=2)
 
-	pdf.set_font(family='Roman', size=18, style="")
+	pdf.set_font(family='Roman', size=font, style="")
 
-	pdf.set_xy(x=45, y=35)
+	pdf.set_xy(x=45, y=31)
 	with pdf.table(text_align="LEFT", first_row_as_headings=False, borders_layout="NONE", align="LEFT") as table:
-
 		for data_row in table_data:
 			row = table.row()
 			for datum in data_row:
@@ -256,11 +267,43 @@ def convertToPdfTracksheet(lowest_post):
 	post_times.pop(0)
 	post_times.pop(0)
 
-	while post_times:
-		limited_post_times = post_times[0:TRACKS_ON_PAGE]
-		post_times = post_times[TRACKS_ON_PAGE:]
-		addPage(limited_post_times, date, pdf)
+	# 24 tracks
+	# for i in range(0, 5):
+	# 	post_times.append(["test_track" + str(i)])
+	#
+	# print("----------------------------")
+	# print(post_times)
+	# print("----------------------------")
+	# print(f"len: {len(post_times)}")
 
+	if len(post_times) <= 30:
+		addPage(post_times, date, pdf, 30)
+
+	elif len(post_times) <= 40:
+		addPage(post_times, date, pdf, 40)
+
+	elif len(post_times) <= 50:
+		day_post_times = post_times[0:31]
+		night_post_times = post_times[20:]
+
+		# add daytime tracks
+		addPage(day_post_times, date, pdf, 30)
+
+		# add nighttime tracks, and first 10 of daytime tracks
+		addPage(night_post_times, date, pdf, 30)
+
+	else:  # failsafe condition
+		while post_times:
+			limited_post_times = post_times[0:TRACKS_ON_PAGE]
+			post_times = post_times[TRACKS_ON_PAGE:]
+			layout = 30
+			addPage(limited_post_times, date, pdf, layout)
+			f = open("error-log.txt", "a")
+			dt = datetime.now(timezone('EST'))
+			f.write(dt.strftime("%A, %B %d"))
+			f.write("   |   ")
+			f.write("track length: " + str(len(post_times)))
+			f.close()
 	pdf.output('Track_Sheet.pdf')
 
 def mainProccess(email):
