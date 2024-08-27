@@ -63,7 +63,7 @@ bannedTrack = ["event name", "greyhound", "africa", "pmu", "mardi gras", "americ
                "wheeling", "skowhegan", 'timonium fair', 'carf - ferndale',
                'illinois fair racing', 'hong kong jockey club', 'arapahoe park', 'at albuquerque',
                'keeneland horse', 'magic city jai alai', 'shenandoah', 'farmington fair', 'fanduel racing tv', 'carf',
-               'columbus', 'gran premio', 'energy', 'fair meadows at tulsa']  # has to be lowercase
+               'columbus', 'gran premio', 'energy', 'fair meadows at tulsa', 'windsor fair']  # has to be lowercase
 
 
 
@@ -76,7 +76,9 @@ woodbine_to_RTN = {'Belmont At Aqueduct': 'Belmont @ The Big A',
                    "Harrah's Philadelphia": "Harrah's Philly",
                    "Century Downs": "Century Downs Stb",
                    "Century Mile": "Century Mile Thb",
-                   "Saratoga": "Saratoga Race Course"
+                   "Saratoga": "Saratoga Race Course",
+                   "Eldorado Scioto": "Scioto Downs",
+                   "Hippodrome Trois Rivieres": "Hippodrome 3R"
 				   }
 
 

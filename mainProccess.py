@@ -209,7 +209,7 @@ def addPage(table_data, date, pdf, layout):
 			30: font 18
 			40: font 15
 	"""
-	layout_lookup = {30: 17.5, 40: 15}
+	layout_lookup = {25: 19, 30: 17.5, 35: 16, 40: 15}
 
 	font = layout_lookup[layout]
 
@@ -267,17 +267,22 @@ def convertToPdfTracksheet(lowest_post):
 	post_times.pop(0)
 	post_times.pop(0)
 
-	# 24 tracks
-	# for i in range(0, 5):
+	# for i in range(0, 14):
 	# 	post_times.append(["test_track" + str(i)])
 	#
 	# print("----------------------------")
 	# print(post_times)
 	# print("----------------------------")
-	# print(f"len: {len(post_times)}")
+	print(f"len: {len(post_times)}")
 
-	if len(post_times) <= 30:
+	if len(post_times) <= 25:
+		addPage(post_times, date, pdf, 25)
+
+	elif len(post_times) <= 30:
 		addPage(post_times, date, pdf, 30)
+
+	elif len(post_times) <= 35:
+		addPage(post_times, date, pdf, 35)
 
 	elif len(post_times) <= 40:
 		addPage(post_times, date, pdf, 40)
