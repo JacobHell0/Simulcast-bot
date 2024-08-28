@@ -1,0 +1,8 @@
+Eldorado Scioto,Georgian Downs,Harrah's Philadelphia,
+Harrington,Hippodrome Trois Rivieres,Hoosier,
+Monticello,Northfield,Ocean,Plainridge Casino,
+Pocono,Red Mile,Red Shores,Running Aces,
+Saratoga Harness,Tioga,Woodbine Mohawk,Yonkers,Freehold,
+The Meadows,Vernon Downs,batavia,tioga downs,
+Northville,Grand River,Ocean Downs,Flamboro,Meadowlands,
+Delaware County Fair,Red Shores - Summerside,Rideau Carleton,Fraser

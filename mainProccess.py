@@ -206,7 +206,9 @@ def addPage(table_data, date, pdf, layout):
 		date -- the date in a string format
 		pdf -- the pdf from FPDF2
 		layout -- the amount of tracks on the page, can be as follows
-			30: font 18
+			25: font 19
+			30: font 17.5
+			35: font 16
 			40: font 15
 	"""
 	layout_lookup = {25: 19, 30: 17.5, 35: 16, 40: 15}

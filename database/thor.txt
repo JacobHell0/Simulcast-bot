@@ -1,0 +1,10 @@
+Arapahoe,Assiniboia,Australian Racing,Belterra,Canterbury,
+Del Mar,Ellis Park,Emerald,Finger Lakes,Fort Erie,Gulfstream,
+Hastings Racecourse,Hawthorne,Horseshoe Indianapolis,Laurel,
+Los Alamitos,Louisiana,Monmouth,Mountaineer,Parx Racing,
+Prairie Meadows,Presque Isle,Ruidoso,Saratoga,
+Sis Australia Racing,Thistledown,Woodbine,Colonial,
+Penn National,Charles Town,Delta Downs,Century Mile,
+Remington Park,Delaware,Retama,Pimlico,Caymanas,Golden Gate,
+Lone Star,Century Downs,Kentucky Downs,Ajax Downs,Churchill,
+Will Rogers Downs,Belmont,Fairmount,Santa Anita
