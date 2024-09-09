@@ -33,7 +33,7 @@ I work as a teller at Ajax Downs, people come in to watch horse races from diffe
 my job as a teller is to make a table of all the tracks, so customers know which tracks are running. I also have to make
 a similar document to assist with programming the TV channels. The document to program the channels looks like this:
 
-<img src="resources/RTN Channel Sheet.png" alt="Old RTN Track sheet">
+<img src="resources/Old-RTN-Channel-Sheet.png" alt="Old RTN Track sheet">
 
 Every day, the teller working would have to pull this data from an Excel spreadsheet, print it, go to the 
 [RTN website](https://www.rtn.tv/schedule/schedule.aspx) and write in all the channel numbers, so we could program the 
@@ -50,7 +50,7 @@ compile it into two PDFs (seen below). Finally, the bot will email out the repor
 print it out.
 
 ### The RTN Channel Sheet
-![RTN Channel Sheet](resources/Old RTN Channel Sheet.png)
+![RTN Channel Sheet](resources/RTN-Channel-Sheet.png)
 
 ### The Track Sheet
 ![Counter Top Track Sheet](resources/Tracksheet.png)
