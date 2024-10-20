@@ -112,7 +112,7 @@ def makeLowestPostWoodbine(tabledict):
 		post_time = ""
 		T_or_H = ""
 		# search through woodbine tracks for post time
-		for track in woodbine_times.keys():
+		for track in reversed(list(woodbine_times.keys())):
 			if inWoodbineTrackDatabase(key):
 				# rename key without renaming actual dict key
 				if compareTracks(setWoodbineTrack(key), track):
