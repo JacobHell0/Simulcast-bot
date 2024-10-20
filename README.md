@@ -15,9 +15,9 @@ morning at 9am.
 
 ## Technical Features
 - A flask webserver that pings [An Uptime Website](https://healthchecks.io/) every minute. I do this because I host this bot on a spare computer.
-- The flask webserver also has a couple of debug features
-- A small database that can be edited via Json and Txt files
-- Automated email through Python's email API
+- The flask webserver also has a couple of debug features.
+- A small database that can be edited via Json and Txt files. This allows me to edit the database while the bot is running.
+- Automated email through Python's email API.
 
 ## The future of this project
 I did this project out of passion and aiming to eliminate spending 20+ minutes every shift making infographics for
