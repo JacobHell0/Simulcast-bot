@@ -130,7 +130,7 @@ def makeLowestPostWoodbine(tabledict):
 			dt = datetime.now(timezone('EST'))
 			f.write(dt.strftime("%A, %B %d"))
 			f.write("   |   ")
-			f.write("RTN: " + key + "\n")
+			f.write("No Post, RTN: " + key + "\n")
 			f.close()
 
 		# posttime, duration, track, roberts, recon(space)
