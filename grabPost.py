@@ -28,7 +28,7 @@ def getCurrentCol(tables):
 		"Nov" : 11,
 		"Dec" : 12,
 	}
-	
+
 	current_date = getDate()  # in format (day, month)
 
 	# the first table is garbage, skip
@@ -42,7 +42,7 @@ def getCurrentCol(tables):
 		for column in columns:
 			# print(column)
 			# for each th element
-			date = column.text.split() 
+			date = column.text.split()
 			# date is in format [weekday name, month, day]
 			# print(date)
 
@@ -60,11 +60,25 @@ def getCurrentCol(tables):
 def getPostFromTBody(tables, index):
 	tracks = tables[index[0]].find("tbody").find_all("td")[index[1]].text.split("\n")
 	return_dict = {}
-	
+
 	# seperate the time, post time, and name with string manipulation
 	for track in tracks:
 		if track == '':
 			continue
+
+		# since we only take first 2 words, there ends up being 2 Gulfstream park, and they have different times,
+		# so I'm just going to manually remove the bad one here, it's a really niche issue. I've also removed other
+		# common ones in the hope to prevent this in the future
+		if ("Tropical Pick" in track) or ("Pick-3" in track) or ("Pick-5" in track) or ("PK3" in track) or ("Pick 5" in track):
+			f = open("error-log.txt", "a")
+			dt = datetime.now(timezone('EST'))
+			f.write(dt.strftime("%A, %B %d"))
+			f.write("   |   ")
+			f.write(f"Removing: {track} before processing\n")
+			f.close()
+
+			continue
+
 		TB_or_H = track[-3:-1]
 		track = track[:-3] #strip the TB or SB off
 
@@ -79,7 +93,7 @@ def getPostFromTBody(tables, index):
 		if int(temp_post_time[0][:2]) >= 13:
 			temp_post_time[0] = str(int(temp_post_time[0][:2]) - 12) + temp_post_time[0][2:]
 
-		post_time = (" ".join(temp_post_time))	
+		post_time = (" ".join(temp_post_time))
 
 		# create dictionary in format {track : [post_time, TB or SB]}
 		if track_name not in return_dict:
@@ -90,7 +104,7 @@ def getPostFromTBody(tables, index):
 
 def grabPost():
 	# go to here https://woodbine.com/simulcasts/
-	# and grab post times, return a dictionary in format: 
+	# and grab post times, return a dictionary in format:
 	# {track : [post_time, TB or SB],
 	#  track : [post_time, TB or SB]} etc...
 
@@ -113,7 +127,7 @@ def grabPost():
 
 	# now go to the table and column in the <tr> element and grab the post times
 	return getPostFromTBody(tables, index)
-	
+
 
 if __name__ == "__main__":
 	print("track list: ")
