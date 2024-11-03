@@ -37,7 +37,7 @@ def manual_send_j():
 
 @app.route('/manual-send/s')
 def manual_send_s():
-    # mainProccess("s_address")
+    mainProccess("s_address")
     return "sent to simulcast, uncomment to work"
 
 
@@ -57,7 +57,7 @@ def return_files_Track_Sheet():
         return str(e)
 
 
-sched.add_job(id='job1', func=send_tracks, trigger='cron', day_of_week='mon-sun', hour=1, minute=0, timezone='UTC')
+sched.add_job(id='job1', func=send_tracks, trigger='cron', day_of_week='mon-sun', hour=14, minute=0, timezone='UTC')
 sched.add_job(id='job2', func=uptime_ping, trigger='cron', minute='*', timezone='UTC')
 
 sched.start()
